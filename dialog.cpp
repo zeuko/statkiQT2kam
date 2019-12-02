@@ -7,11 +7,13 @@ Dialog::Dialog(QWidget *parent) :
 {
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
-    ui->graphicsView->setScene(scene);
 
+
+    ui->graphicsView->setScene(scene);
     scene->addItem(new Map(15, 15));
+
     scene->addItem(new Map(395, 15));
-    scene->update();
+
 }
 
 

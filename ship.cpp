@@ -124,23 +124,103 @@ Ship* createThreeMast(Map* Obiekt)
                             (*it)->setState(SHIP);
                         }
                     }
-                        else{
-                                piece = Obiekt->getPiece(x,y);
-                                if(piece->getState() == BLANK)
-                                {
-                                       piece->setState(SHIP);
-                                       listOfPieceShip->push_back(piece);
-                                       tabX = x;
-                                       tabY = y;
-                                }
-                                else
-                                {
-                                    x = qrand()%10;
-                                    y = qrand()%10;
 
-                                }
-                            }
                     // jezeli pionowego też się nie da, to wtedy klops, i trzeba losować x i y jeszcze raz i szukać nowej pozycji
                 }
         }
 }
+
+Ship* createTwoMast (Map* Obiekt)
+{
+    int x,y,tabX,tabY;
+    Piece* piece;
+    list<Piece*> *listOfPieceShip = new list<Piece*>();
+
+    bool canBeShip[3];
+   while(listOfPieceShip->empty())
+       {
+        x = qrand()%10;
+        y = qrand()%10;
+        tabX = x;
+        tabY = y;
+
+
+        canBeShip[0] = checkIfCanBeShip(Obiekt, tabX + 1, tabY);
+        canBeShip[1] = checkIfCanBeShip(Obiekt, tabX, tabY);
+        canBeShip[2] = checkIfCanBeShip(Obiekt, tabX - 1, tabY);
+
+
+
+
+        int start = -1;
+        int numberOfConsecutivePieces = 0;
+
+        for(int i = 0; i < 2; i++)
+        {
+            if(canBeShip[i] == true){
+                if(start == -1){
+                    start = i;
+                    numberOfConsecutivePieces = 1;
+                }
+                    else{
+                        numberOfConsecutivePieces++;
+                }
+            } else {
+                start = -1;
+                numberOfConsecutivePieces = 0;
+            }
+
+        }
+
+        if(numberOfConsecutivePieces == 2){
+            int positionShift = 1 - start;
+            listOfPieceShip->push_back(Obiekt->getPiece(x + positionShift,y));
+            listOfPieceShip->push_back(Obiekt->getPiece(x + positionShift + 1,y));
+
+            for(list<Piece*>::iterator it;it != listOfPieceShip->end(); it++)
+            {
+                (*it)->setState(SHIP);
+            }
+        }
+            else{
+
+                canBeShip[0] = checkIfCanBeShip(Obiekt, tabX, tabY-1);
+                canBeShip[1] = checkIfCanBeShip(Obiekt, tabX, tabY);
+                canBeShip[2] = checkIfCanBeShip(Obiekt, tabX, tabY+1);
+
+                for(int i = 0; i < 2; i++)
+                {
+                    if(canBeShip[i] == true){
+                        if(start == -1){
+                            start = i;
+                            numberOfConsecutivePieces = 1;
+                        }
+                            else{
+                                numberOfConsecutivePieces++;
+                        }
+                    } else {
+                        start = -1;
+                        numberOfConsecutivePieces = 0;
+                    }
+
+                }
+                if(numberOfConsecutivePieces == 2)
+                {
+                    int positionShift = 1 - start;
+                    listOfPieceShip->push_back(Obiekt->getPiece(x + positionShift,y));
+                    listOfPieceShip->push_back(Obiekt->getPiece(x + positionShift + 1,y));
+
+                    for(list<Piece*>::iterator it;it != listOfPieceShip->end(); it++)
+                    {
+                        (*it)->setState(SHIP);
+                    }
+                }
+
+
+            }
+
+
+
+    }
+}
+

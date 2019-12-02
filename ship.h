@@ -12,6 +12,8 @@ public:
     static bool checkIfCanBeShip(Map *map, int x, int y);
     int randomizePosition();
     static Ship* createThreeMast(Map* Obiekt);
+    static Ship* createTwoMast(Map* Obiekt);
+    static Ship* createOneMast(Map* Obiekt);
     bool isBlank(Piece* piece);
     bool isShip(Piece* piece);
 

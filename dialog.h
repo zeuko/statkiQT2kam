@@ -18,6 +18,7 @@ public:
 private:
     Ui::Dialog *ui;
     QGraphicsScene *scene;
+    QGraphicsScene *scene1;
     Map *Mapa;
 
 };

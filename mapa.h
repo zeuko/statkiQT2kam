@@ -4,7 +4,7 @@
 #include <QGraphicsItem>
 #include <QDebug>
 #include <vector>
-#include <QGraphicsView>
+
 enum State
 {
     SHIP = 0,   // statek plywa
@@ -61,7 +61,7 @@ protected:
 
 
     private:
-        QGraphicsView * parent;
+
         std::vector<std::vector<Piece*>> pieces;
         int size;
 };

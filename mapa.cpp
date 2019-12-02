@@ -59,6 +59,7 @@ QRectF Map::boundingRect() const
 void Map::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     cout << "sprawdzam " << flush;
+
     for(std::vector<int>::size_type row = 0; row != pieces.size(); row++) {
         for(std::vector<int>::size_type col = 0; col != pieces[row].size(); col++) {
             pieces[row][col]->paint(painter, option, widget);
@@ -99,6 +100,7 @@ void Map::mousePressEvent(QGraphicsSceneMouseEvent *event)
     // cout << getPiece(x,y);
 
     while(test == 0){
+
          if(x < posTabx + 30 && x > posTabx ){
              if(y < posTaby + 30 && y > posTaby){
 
@@ -125,7 +127,7 @@ void Map::mousePressEvent(QGraphicsSceneMouseEvent *event)
         clicked->setState(BLANK);
     }
 
-    parent->update();
+         update();
 }
 
 
