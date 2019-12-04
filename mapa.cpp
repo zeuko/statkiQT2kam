@@ -87,47 +87,7 @@ Piece *Map::getPiece(int row, int col){
 void Map::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 
-    //Piece* piece = getPiece(x,y);
-   //cout << event->pos().x() << ", " << event->pos().y() <<endl;
-    int x = event->pos().x();
-    int y = event->pos().y();
-    int posTabx = 15;
-    int posTaby = 10;
-    int itx,inty;
-    int test = 0;
-    int kolumna = 0;
-    int wiersz = 0;
-    // cout << getPiece(x,y);
 
-    while(test == 0){
-
-         if(x < posTabx + 30 && x > posTabx ){
-             if(y < posTaby + 30 && y > posTaby){
-
-                 test =1;
-                  cout << kolumna << " " << wiersz << " |" << flush;
-             }
-             else{
-
-                 posTaby+=30;
-                 wiersz++;
-             }
-         }
-         else{
-
-             posTabx+=30;
-             kolumna++;
-         }
-
-     }
-
-    Piece* clicked = getPiece(wiersz,kolumna);
-    if(clicked->getState() != BLANK)
-    {
-        clicked->setState(BLANK);
-    }
-
-         update();
 }
 
 
@@ -155,8 +115,8 @@ QRectF Piece::boundingRect() const
 void Piece::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 
-
-
+    setState(BLANK);
+    update();
 
 }
 

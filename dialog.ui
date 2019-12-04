@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
-    <height>450</height>
+    <width>997</width>
+    <height>563</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,23 @@
   <widget class="QGraphicsView" name="graphicsView">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>741</width>
-     <height>431</height>
+     <x>40</x>
+     <y>30</y>
+     <width>320</width>
+     <height>320</height>
+    </rect>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+  </widget>
+  <widget class="QGraphicsView" name="graphicsView_2">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>30</y>
+     <width>320</width>
+     <height>320</height>
     </rect>
    </property>
    <property name="alignment">

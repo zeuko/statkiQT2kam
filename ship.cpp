@@ -224,3 +224,26 @@ Ship* createTwoMast (Map* Obiekt)
     }
 }
 
+
+Ship* createOneMast (Map* Obiekt){
+
+    int x,y,tabX,tabY;
+    Piece* piece;
+    list<Piece*> *listOfPieceShip = new list<Piece*>();
+    Piece* oneShip;
+    while(listOfPieceShip->empty()){
+        x = qrand()%10;
+        y = qrand()%10;
+        tabX = x;
+        tabY = y;
+
+        if(checkIfCanBeShip(Obiekt,x,y)){
+            oneShip = Obiekt->getPiece(x,y);
+            oneShip->setState(SHIP);
+            listOfPieceShip->push_back(oneShip);
+        }
+
+     }
+
+}
+
