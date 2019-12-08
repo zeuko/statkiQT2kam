@@ -1,23 +1,20 @@
 
-#include "mapa.h"
-#include <qgraphicsitem.h>
-#include <stdio.h>
-#include <iostream>
-#include <QGraphicsSceneMouseEvent>
 
+#include "mapa.h"
 
 using namespace std;
 
 Qt::GlobalColor getColor(State state) {
+
     switch (state) {
-        case SHIP:
-            return Qt::black;
-        case HIT:
-            return Qt::red;
-        case MISS:
-            return Qt::gray;
-        case BLANK:
-            return Qt::white;
+    case SHIP:
+        return Qt::black;
+    case HIT:
+        return  Qt::red;
+    case MISS:
+        return Qt::gray;
+    case BLANK:
+        return Qt::white;
     }
 }
 
@@ -58,11 +55,12 @@ QRectF Map::boundingRect() const
 
 void Map::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    cout << "sprawdzam " << flush;
+
 
     for(std::vector<int>::size_type row = 0; row != pieces.size(); row++) {
         for(std::vector<int>::size_type col = 0; col != pieces[row].size(); col++) {
             pieces[row][col]->paint(painter, option, widget);
+
         }
     }
 
@@ -73,7 +71,7 @@ Piece *Map::getPiece(int row, int col){
 
     if(row > 9 || row < 0 || col > 9 || col < 0 )
     {
-            return NULL;
+        return NULL;
 
     }
     else
@@ -84,11 +82,6 @@ Piece *Map::getPiece(int row, int col){
 }
 
 
-void Map::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-
-
-}
 
 
 
@@ -103,7 +96,7 @@ Piece::Piece(const Piece &piece)
 Piece::Piece(int x, int y, int size) {
     cout << "Creating Piece..." << endl;
     qtRectangle = QRect(x, y, size, size);
-    state = State::HIT;
+    state = State::BLANK;
 
 }
 
@@ -125,7 +118,6 @@ void Piece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     //cout << "Painting Piece..." << endl;
     Qt::GlobalColor color = getColor(state);
     QBrush brush(color);
-
     painter->fillRect(qtRectangle, brush);
     painter->drawRect(qtRectangle);
 }
@@ -138,7 +130,18 @@ void Piece::setState(State state)
 
 State Piece::getState()
 {
-   return state;
+    return state;
 }
 
+
+
+Ship* Piece::getShip()
+{
+    return shipPointer;
+}
+
+void Piece::setPointerShip(Ship* pointerShip)
+{
+    this->shipPointer = pointerShip;
+}
 

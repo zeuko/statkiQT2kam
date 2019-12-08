@@ -1,8 +1,12 @@
 #ifndef DIALOG_H
 #define DIALOG_H
+
+
+
 #include "mapa.h"
 #include <QDialog>
-
+#include "ship.h"
+using namespace std;
 namespace Ui {
 class Dialog;
 }
@@ -24,4 +28,5 @@ private:
 
 };
 
-#endif // DIALOG_H
+
+#endif // MAP_H
