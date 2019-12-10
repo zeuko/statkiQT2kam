@@ -17,34 +17,56 @@ Dialog::Dialog(QWidget *parent) :
 
     ui->graphicsView_2->setScene(scene1);
 
-    Map* map;
+    Map* playersMap;
 
-    map = new Map(20,20);
-    Map* map2 = new Map(20,20);
-
-
+    playersMap = new Map(20,20);
+    Map* botsMap = new Map(20,20,true);
 
 
 
-    for(int i = 0; i < 11;i++){
-        Ship* ship = Ship::createThreeMast(map);
-        update();
+
+
+    for(int i = 0; i < 4;i++){
+        Ship::createOneMast(playersMap);
+
     }
-    scene->addItem(map);
+    for(int i = 0; i < 3;i++){
+        Ship::createTwoMast(playersMap);
 
-    scene1->addItem(map2);
+    }
+    for(int i = 0; i < 2;i++){
+        Ship::createThreeMast(playersMap);
 
-    for(int x = 0; x <9; x++)
+    }
+
+
+    for(int i = 0; i < 4;i++){
+        Ship::createOneMast(botsMap);
+
+    }
+    for(int i = 0; i < 3;i++){
+        Ship::createTwoMast(botsMap);
+
+    }
+    for(int i = 0; i < 2;i++){
+        Ship::createThreeMast(botsMap);
+
+    }
+    scene->addItem(playersMap);
+
+    scene1->addItem(botsMap);
+
+    for(int x = 0; x <10; x++)
     {
 
-        for(int y = 0; y < 9; y++)
+        for(int y = 0; y < 10; y++)
         {
-            scene->addItem(map->getPiece(x,y));
-            scene1->addItem(map2->getPiece(x,y));
+            scene->addItem(playersMap->getPiece(x,y));
+            scene1->addItem(botsMap->getPiece(x,y));
         }
     }
 
-     update();
+    update();
 }
 
 

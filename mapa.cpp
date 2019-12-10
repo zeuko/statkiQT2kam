@@ -6,7 +6,8 @@ using namespace std;
 
 Qt::GlobalColor getColor(State state) {
 
-    switch (state) {
+    switch (state)
+    {
     case SHIP:
         return Qt::black;
     case HIT:
@@ -22,7 +23,7 @@ Qt::GlobalColor getColor(State state) {
 // size - wymiar mapy, ilosc kratek wysokosci / szerokosci
 // x0, y0 - wspolrzedne lewego gornego rogu
 //
-Map::Map(int x0, int y0, int size, int pieceSize)
+Map::Map(int x0, int y0, int size, int pieceSize, bool shouldPaintShipStatus)
 {
     this->size = size;
 
@@ -34,7 +35,7 @@ Map::Map(int x0, int y0, int size, int pieceSize)
         int x = x0;
         for (int j = 0; j < size; j++) {
             cout << "x " << x <<", y " << y << endl;//"x " <<"x " <<
-            Piece *piece = new Piece(x, y, pieceSize);
+            Piece *piece = new Piece(x, y, pieceSize,shouldPaintShipStatus);
             row->push_back(piece);
             x = x + pieceSize;
         }
@@ -71,7 +72,7 @@ Piece *Map::getPiece(int row, int col){
 
     if(row > 9 || row < 0 || col > 9 || col < 0 )
     {
-        return NULL;
+        return nullptr;
 
     }
     else
@@ -93,11 +94,11 @@ Piece::Piece(const Piece &piece)
 }
 
 
-Piece::Piece(int x, int y, int size) {
+Piece::Piece(int x, int y, int size,bool paintsShipStatus) {
     cout << "Creating Piece..." << endl;
     qtRectangle = QRect(x, y, size, size);
     state = State::BLANK;
-
+    shouldPaintShipStatus = paintsShipStatus;
 }
 
 QRectF Piece::boundingRect() const
@@ -108,18 +109,49 @@ QRectF Piece::boundingRect() const
 void Piece::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 
-    setState(BLANK);
+    if(getState() == SHIP){
+        setState(HIT);
+
+    }
+    else if (getState() == BLANK)
+    {
+        setState(MISS);
+    }
+
     update();
 
 }
 
 void Piece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    //cout << "Painting Piece..." << endl;
-    Qt::GlobalColor color = getColor(state);
-    QBrush brush(color);
-    painter->fillRect(qtRectangle, brush);
-    painter->drawRect(qtRectangle);
+  if(state == SHIP)
+  {
+      if(shouldPaintShipStatus)
+      {
+          //cout << "Painting Piece..." << endl;
+          Qt::GlobalColor color = getColor(state);
+          QBrush brush(color);
+
+          painter->fillRect(qtRectangle, brush);
+          painter->drawRect(qtRectangle);
+      }
+      else {
+           Qt::GlobalColor color = getColor(BLANK);
+           QBrush brush(color);
+
+           painter->fillRect(qtRectangle, brush);
+           painter->drawRect(qtRectangle);
+      }
+  }
+    else
+  {
+      //cout << "Painting Piece..." << endl;
+      Qt::GlobalColor color = getColor(state);
+      QBrush brush(color);
+
+      painter->fillRect(qtRectangle, brush);
+      painter->drawRect(qtRectangle);
+  }
 }
 
 void Piece::setState(State state)

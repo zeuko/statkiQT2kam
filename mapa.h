@@ -28,26 +28,26 @@ enum GamePhase
 
 class Piece : public QGraphicsItem
 {
-    public:
-        Piece(const Piece &piece);
-        Piece(int x, int y, int size);
+public:
+    Piece(const Piece &piece);
+    Piece(int x, int y, int size,bool paintShipStatus);
 
-        void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
-        void setState(State state);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
+    void setState(State state);
 
-        State getState();
-        Ship* getShip();
+    State getState();
+    Ship* getShip();
 
-        void setPointerShip(Ship* shipPointer);
-        QRectF boundingRect() const override;
+    void setPointerShip(Ship* shipPointer);
+    QRectF boundingRect() const override;
+    bool shouldPaintShipStatus;
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
-    protected:
-       void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-
-    private:
-        QRect qtRectangle;
-        State state;
-        Ship* shipPointer;
+private:
+    QRect qtRectangle;
+    State state;
+    Ship* shipPointer;
 
 };
 
@@ -56,23 +56,24 @@ class Piece : public QGraphicsItem
 
 class Map : public QGraphicsItem
 {
-    public:
-        Map(const Map &map);
-        Map(int x0, int y0, int size = 10, int pieceSize = 30);
-        QRectF boundingRect() const override;
-        void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
+public:
+    //Map(const Map &map);
+    Map(int x0, int y0, int size = 10, int pieceSize = 30, bool shouldPaintShipStatus = false);
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
 
-        Piece* getPiece(int row, int col);
+    Piece* getPiece(int row, int col);
 
-        void returnsomething(Piece*);
-
-
+    void returnsomething(Piece*);
 
 
-    private:
 
-        std::vector<std::vector<Piece*>> pieces;
-        int size;
+
+private:
+
+    std::vector<std::vector<Piece*>> pieces;
+    int size;
+
 
 };
 

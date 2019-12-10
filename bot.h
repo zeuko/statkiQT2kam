@@ -6,17 +6,16 @@ class Bot
 {
 public:
     Bot();
-    bool chceckIsHit(Map* map,int x,int y) ;
-    void brainBot(Map *map);
+    void takeTurn(Map *map);
 
+    static bool shoot(Map *map, int x, int y);
+    static bool isBlank(Map *map, int x, int y);
+
+    void setHit(bool hitted);
+    bool getHit();
 private:
-    int tempX;
-    int tempY;
-    bool lastShoot;
-    int counterSunk;
-    bool shipSunk;
-    bool shootDir[4];
-    int direction = 0;
+    bool hit;
+
 };
 
 #endif // BOT_H
