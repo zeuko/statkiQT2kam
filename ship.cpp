@@ -2,23 +2,25 @@
 #include <QTime>
 #include <QRandomGenerator>
 using namespace std;
-Ship::Ship(list<Piece*>listOfpiece)
+Ship::Ship(list<Piece*>*listOfpiece)
 {
-    for(list<Piece*>::iterator it = listOfpiece.begin();it != listOfpiece.end(); it++)
+    for(list<Piece*>::iterator it = listOfpiece->begin();it != listOfpiece->end(); it++)
     {
         (*it)->setPointerShip(this);
+
     }
+this->pieces = listOfpiece;
 };
-list<Piece*> Ship::getListShip()
+list<Piece*>* Ship::getListShip()
 {
-    return pieces;
+    return pieces ;
 
 }
 bool Ship::isSunk()
 {
-    list<Piece*> lista = getListShip();
+    list<Piece*>* lista = getListShip();
 
-    for(list<Piece*>::iterator it = lista.begin(); it != lista.end(); it++)
+    for(list<Piece*>::iterator it = lista->begin(); it != lista->end(); it++)
     {
         if((*it)->getState() != HIT)
         {
@@ -320,14 +322,14 @@ Ship* Ship :: createThreeMast(Map* Obiekt)
             lista = createThreeMastVertical(Obiekt,x,y);
             if(lista != nullptr){
                 makeShip = true;
-                Ship* ship = new Ship(*lista);
+                Ship* ship = new Ship(lista);
                 return ship;
             }
             else {
                 lista =createThreeMastHorizontal(Obiekt,x,y);
                 if(lista != nullptr){
                     makeShip = true;
-                    Ship* ship = new Ship(*lista);
+                    Ship* ship = new Ship(lista);
                     return ship;
                 }
                 else {
@@ -342,7 +344,7 @@ Ship* Ship :: createThreeMast(Map* Obiekt)
             lista =createThreeMastHorizontal(Obiekt,x,y);
             if(lista != nullptr){
                 makeShip = true;
-                Ship* ship = new Ship(*lista);
+                Ship* ship = new Ship(lista);
                 return ship;
             }
             else {
@@ -350,7 +352,7 @@ Ship* Ship :: createThreeMast(Map* Obiekt)
 
                 if(lista != nullptr){
                     makeShip = true;
-                    Ship* ship = new Ship(*lista);
+                    Ship* ship = new Ship(lista);
                     return ship;
                 }
                 else {
@@ -389,7 +391,7 @@ Ship* Ship:: createOneMast (Map* Obiekt){
                 (*it)->setState(SHIP);
 
             }
-            Ship* ship = new Ship(*listOfPieceShip);
+            Ship* ship = new Ship(listOfPieceShip);
             return ship;
         }
         else
@@ -420,14 +422,14 @@ Ship* Ship :: createTwoMast(Map* Obiekt)
             lista = createTwoMastVertical(Obiekt,x,y);
             if(lista != nullptr){
                 makeShip = true;
-                Ship* ship = new Ship(*lista);
+                Ship* ship = new Ship(lista);
                 return ship;
             }
             else {
                 lista =createTwoMastHorizontal(Obiekt,x,y);
                 if(lista != nullptr){
                     makeShip = true;
-                    Ship* ship = new Ship(*lista);
+                    Ship* ship = new Ship(lista);
                     return ship;
                 }
                 else {
@@ -442,7 +444,7 @@ Ship* Ship :: createTwoMast(Map* Obiekt)
             lista =createTwoMastHorizontal(Obiekt,x,y);
             if(lista != nullptr){
                 makeShip = true;
-                Ship* ship = new Ship(*lista);
+                Ship* ship = new Ship(lista);
                 return ship;
             }
             else {
@@ -450,7 +452,7 @@ Ship* Ship :: createTwoMast(Map* Obiekt)
 
                 if(lista != nullptr){
                     makeShip = true;
-                    Ship* ship = new Ship(*lista);
+                    Ship* ship = new Ship(lista);
                     return ship;
                 }
                 else {

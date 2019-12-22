@@ -58,7 +58,7 @@ class Map : public QGraphicsItem
 {
 public:
     //Map(const Map &map);
-    Map(int x0, int y0, int size = 10, int pieceSize = 30, bool shouldPaintShipStatus = false);
+    Map(int x0, int y0, bool shouldPaintShipStatus ,int size = 10, int pieceSize = 30 );
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
 

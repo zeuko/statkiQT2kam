@@ -23,7 +23,7 @@ Qt::GlobalColor getColor(State state) {
 // size - wymiar mapy, ilosc kratek wysokosci / szerokosci
 // x0, y0 - wspolrzedne lewego gornego rogu
 //
-Map::Map(int x0, int y0, int size, int pieceSize, bool shouldPaintShipStatus)
+Map::Map(int x0, int y0,  bool shouldPaintShipStatus, int size, int pieceSize)
 {
     this->size = size;
 
@@ -126,7 +126,7 @@ void Piece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 {
   if(state == SHIP)
   {
-      if(shouldPaintShipStatus)
+      if(shouldPaintShipStatus )
       {
           //cout << "Painting Piece..." << endl;
           Qt::GlobalColor color = getColor(state);

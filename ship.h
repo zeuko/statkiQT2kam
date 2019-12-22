@@ -10,7 +10,7 @@ class Ship
 {
 public:
 
-    Ship(list<Piece*> listOfpiece );
+    Ship(list<Piece *> *listOfpiece );
     bool isSunk();
     static bool checkIfCanBeShip(Map *map, int x, int y);
     int randomizePosition();
@@ -18,19 +18,19 @@ public:
     static Ship* createTwoMast(Map* Obiekt);
     static Ship* createOneMast(Map* Obiekt);
     bool isBlank(Piece* piece);
-    bool isShip(Piece* piece);
 
-    Piece *createThreeMastVertical();
 
+
+   static list<Piece *> *createTwoMastVertical(Map *Obiekt, int x, int y);
     static Ship* createThreeMast(Map* Obiekt);
     static list<Piece*>* createThreeMastVertical(Map* Obiekt, int x, int y) ;
     static list<Piece*>* createThreeMastHorizontal(Map *Obiekt, int x, int y);
 
     static list<Piece *> *createTwoMastHorizontal(Map *Obiekt, int x, int y);
-    static list<Piece *> *createTwoMastVertical(Map *Obiekt, int x, int y);
-    list<Piece *> getListShip();
+
+    list<Piece *>* getListShip();
 private:
-    list<Piece*> pieces;
+    list<Piece*>* pieces;
 
 
 };
