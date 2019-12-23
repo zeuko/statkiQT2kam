@@ -1,7 +1,8 @@
 
-
+#include "QCoreApplication"
 #include "mapa.h"
-
+#include "mainwindow.h"
+extern Dialog* oknodwa;
 using namespace std;
 
 Qt::GlobalColor getColor(State state) {
@@ -26,6 +27,8 @@ Qt::GlobalColor getColor(State state) {
 Map::Map(int x0, int y0,  bool shouldPaintShipStatus, int size, int pieceSize)
 {
     this->size = size;
+    this->x0 = x0;
+    this->y0 = y0;
 
     int y = y0;
     for (int i = 0; i < size; i++) {
@@ -49,19 +52,16 @@ Map::Map(int x0, int y0,  bool shouldPaintShipStatus, int size, int pieceSize)
 
 QRectF Map::boundingRect() const
 {
-    return QRectF(10,10, 310, 310);
+    return QRectF(x0, y0, 30*size, 30*size); // TODO- hardkodowane 30, fix
 }
 
 
 
 void Map::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-
-
     for(std::vector<int>::size_type row = 0; row != pieces.size(); row++) {
         for(std::vector<int>::size_type col = 0; col != pieces[row].size(); col++) {
             pieces[row][col]->paint(painter, option, widget);
-
         }
     }
 
@@ -83,8 +83,10 @@ Piece *Map::getPiece(int row, int col){
 }
 
 
-
-
+void Map::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    update();
+    QGraphicsItem::mousePressEvent(event);
+}
 
 
 Piece::Piece(const Piece &piece)
@@ -108,25 +110,17 @@ QRectF Piece::boundingRect() const
 
 void Piece::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-
-    if(getState() == SHIP){
-        setState(HIT);
-
+    if (event->buttons() & Qt::LeftButton && (state == SHIP || state == BLANK)) {
+        update();
+        QCoreApplication::sendEvent(oknodwa, new GameProgressEvent(this));
     }
-    else if (getState() == BLANK)
-    {
-        setState(MISS);
-    }
-
-    update();
-
 }
 
 void Piece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-  if(state == SHIP)
+  if (state == SHIP)
   {
-      if(shouldPaintShipStatus )
+      if(shouldPaintShipStatus)
       {
           //cout << "Painting Piece..." << endl;
           Qt::GlobalColor color = getColor(state);
@@ -177,3 +171,12 @@ void Piece::setPointerShip(Ship* pointerShip)
     this->shipPointer = pointerShip;
 }
 
+Map :: ~Map()
+{
+    // TODO
+}
+
+Piece :: ~Piece()
+{
+    // TODO
+}

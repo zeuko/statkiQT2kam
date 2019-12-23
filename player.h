@@ -1,20 +1,18 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "mapa.h"
-
+#include <QObject>
 using namespace std;
 
-class player
+class Player : public QObject
 {
+    Q_OBJECT
 public:
-    player();
-    ~player();
-    void fireToMap();
 
+    Player();
+    ~Player();
+    bool takeTurn(Map *map);
 
-    void checkPlayerShot();
-private:
-    vector<vector<Piece*>> piecePlayer;
 };
 
 #endif // PLAYER_H

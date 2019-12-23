@@ -1,16 +1,19 @@
 #include "player.h"
 
-player::player()
+Player::Player()
 {
 
 }
 
-player::~player()
+Player::~Player()
 {
 
 }
 
-void player :: reWriteMap(Map* mapOfShip)
+bool Player :: takeTurn(Map* map)
 {
 
+
+
+    return false;
 }

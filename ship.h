@@ -11,6 +11,7 @@ class Ship
 public:
 
     Ship(list<Piece *> *listOfpiece );
+    ~Ship();
     bool isSunk();
     static bool checkIfCanBeShip(Map *map, int x, int y);
     int randomizePosition();

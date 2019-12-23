@@ -1,69 +1,46 @@
 #include "bot.h"
-#include "ship.h"
+
 Bot::Bot()
 {
 
 }
 
 
-
-bool Bot:: shoot(Map *map, int x, int y)
+bool Bot :: takeTurn(Map* mapPlayer)
 {
-    if(map->getPiece(x,y)->getState() == SHIP)
+/*
+    if(position->empty())
     {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+        int x = qrand() % 10;
+        int y = qrand() % 10;
 
-}
-bool Bot:: isBlank(Map *map, int x, int y)
-{
-    if(map->getPiece(x,y)->getState() == BLANK)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-
-}
-
-void Bot:: setHit(bool hitted)
-{
-      this->hit = hitted;
-
-}
-
-
-bool Bot:: getHit()
-{
-    return  hit;
-}
-
-
-void  Bot :: takeTurn(Map* map)
-{
-
-    int x;
-    int y;
-
-    if(hit == false)
-    {
-        while(isBlank(map,x,y) == false)
+        if(isHit() == true)
         {
-            x = qrand()%10;
-            y = qrand()%10;
+            mapPlayer->getPiece(x,y)->setState(HIT);
+            if(isSunk() == true)
+            {
+                mapPlayer->getPiece(x,y)->setState(SUNK);
+            }
+            else
+                {
+                    this->hitX = x;
+                    this->hitY = y;
+                    position->push_back(PieceToShoot::oneLeft());
+                    position->push_back(PieceToShoot::oneRight());
+                    position->push_back(PieceToShoot::oneDown());
+                    position->push_back(PieceToShoot::oneUp());
+                }
+             return true;
+        }
+        else {
+            mapPlayer->getPiece(x,y)->setState(MISS);
+            return false;
         }
 
-
     }
+    else
+    {
 
 
-
-
+    }*/
 }
-

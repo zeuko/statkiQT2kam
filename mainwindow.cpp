@@ -3,6 +3,10 @@
 #include <QPainter>
 #include "dialog.h"
 #include <QGraphicsScene>
+
+
+Dialog* oknodwa;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -18,9 +22,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_start_clicked()
 {
-    Dialog oknodwa;
-    oknodwa.setModal(true);
+
+    oknodwa = new Dialog();
+    oknodwa->setModal(true);
 
     this->close();
-    oknodwa.exec();
+    oknodwa->exec();
 }

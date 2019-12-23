@@ -21,6 +21,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mapa.cpp \
+    piecetoshoot.cpp \
     player.cpp \
     ship.cpp
 
@@ -29,6 +30,7 @@ HEADERS += \
     dialog.h \
     mainwindow.h \
     mapa.h \
+    piecetoshoot.h \
     player.h \
     ship.h
 

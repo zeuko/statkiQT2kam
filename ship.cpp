@@ -383,7 +383,7 @@ Ship* Ship:: createOneMast (Map* Obiekt){
     while(checkShip == false){
         if(checkIfCanBeShip(Obiekt,x,y) == true)
         {
-            checkShip= true;
+            checkShip = true;
             list<Piece*>*listOfPieceShip = new list<Piece*>();
             listOfPieceShip->push_back(Obiekt->getPiece(x, y));
             for(list<Piece*>::iterator it = listOfPieceShip->begin();it != listOfPieceShip->end(); it++)

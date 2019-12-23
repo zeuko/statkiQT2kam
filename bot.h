@@ -1,20 +1,21 @@
 #ifndef BOT_H
 #define BOT_H
 #include "mapa.h"
-
+#include "ship.h"
+#include "piecetoshoot.h"
 class Bot
 {
 public:
     Bot();
-    void takeTurn(Map *map);
+    bool takeTurn(Map* mapPlayer);
 
-    static bool shoot(Map *map, int x, int y);
-    static bool isBlank(Map *map, int x, int y);
-
-    void setHit(bool hitted);
-    bool getHit();
 private:
-    bool hit;
+    list<PieceToShoot*>* position;
+
+    int hitX = -1;
+    int hitY = -1;
+
+
 
 };
 
