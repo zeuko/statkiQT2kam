@@ -57,6 +57,7 @@ Dialog::Dialog(QWidget *parent) : QDialog(parent), ui(new Ui::Dialog)
     update();
 
 
+
     this->currentGamePhase = GamePhase::PLAYER_TURN;
 
 
@@ -66,7 +67,7 @@ Dialog::Dialog(QWidget *parent) : QDialog(parent), ui(new Ui::Dialog)
 
 void Dialog::playTheGame(GameProgressEvent* event)
 {
-
+//tu jest zle co nie ??
     if (currentGamePhase == GamePhase::PLAYER_TURN) {
 
         std::cout << "Player's move: ";
@@ -88,10 +89,22 @@ void Dialog::playTheGame(GameProgressEvent* event)
 
     } else {
         // Bot's Turn - TODO
+
+        bool status;
+        do
+        {
+
+         status = bot->takeTurn(playersMap);
+         if (checkIsEnd(playerShips)) {
+             std::cout << "END, BOT WON" << flush;
+             // display prompt & exit application ?
+         }
+            playersMap->update();
+        }while(status);
         currentGamePhase = PLAYER_TURN;
     }
 
-    playersMap->update();
+
     botsMap->update();
 
 }
@@ -119,8 +132,6 @@ list<Ship*>*  createShips(Map* map)
     for(int i = 0; i < 2;i++){
 
         listShip->push_back(Ship::createThreeMast(map));
-
-
     }
 
     for(int i = 0; i < 3;i++){

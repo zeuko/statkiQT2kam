@@ -2,7 +2,7 @@
 #define BOT_H
 #include "mapa.h"
 #include "ship.h"
-#include "piecetoshoot.h"
+#include "CoordinatsToShoot.h"
 class Bot
 {
 public:
@@ -10,7 +10,7 @@ public:
     bool takeTurn(Map* mapPlayer);
 
 private:
-    list<PieceToShoot*>* position;
+    list<CoordinatsToShoot*>* position = new list<CoordinatsToShoot*>();
 
     int hitX = -1;
     int hitY = -1;

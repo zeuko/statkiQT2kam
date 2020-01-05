@@ -1,0 +1,26 @@
+#ifndef PIECETOSHOOT_H
+#define PIECETOSHOOT_H
+
+class PieceToShoot
+{
+public:
+ 
+    
+    ~PieceToShoot();
+private:
+
+    PieceToShoot(int x, int y);
+    static PieceToShoot* oneLeft();
+    static PieceToShoot* twoLeft();
+    static PieceToShoot* oneRight();
+    static PieceToShoot* twoRight();
+    static PieceToShoot* oneUp();
+    static PieceToShoot* twoUp();
+    static PieceToShoot* oneDown();
+    static PieceToShoot* twoDown();
+    int shiftX;
+    int shiftY;
+
+};
+
+#endif // PIECETOSHOOT_H

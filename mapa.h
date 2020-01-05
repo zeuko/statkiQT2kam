@@ -16,7 +16,8 @@ enum State
     SHIP = 0,   // statek plywa
     HIT = 1,    // statek trafiony
     MISS = 2,   // pudlo
-    BLANK = 3   // ocean
+    BLANK = 3,   // ocean
+    SUNK = 4    //zatopiony
 };
 
 
@@ -45,6 +46,10 @@ public:
     void setPointerShip(Ship* shipPointer);
     QRectF boundingRect() const override;
     bool shouldPaintShipStatus;
+    void setMapPositionX(int mapX);
+    void setMapPositionY(int mapY);
+    int getMapPositionX();
+    int getMapPositionY();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
@@ -52,6 +57,8 @@ private:
     QRect qtRectangle;
     State state;
     Ship* shipPointer;
+    int mapPositionX;
+    int mapPositionY;
 
 };
 

@@ -1,0 +1,72 @@
+#include "CoordinatsToShoot.h"
+
+PieceToShoot :: PieceToShoot  (int x, int y)
+{
+    this->shiftX = x;
+    this->shiftY = y;
+
+}
+
+PieceToShoot* PieceToShoot :: oneLeft()
+{
+    PieceToShoot* oneLeft = new PieceToShoot(-1,0);
+
+    return oneLeft;
+    
+}
+
+PieceToShoot* PieceToShoot :: twoLeft()
+{
+    PieceToShoot* twoLeft = new PieceToShoot(-2,0);
+
+    return twoLeft;
+
+}
+
+PieceToShoot* PieceToShoot :: oneRight()
+{
+    PieceToShoot* oneRight = new PieceToShoot(1,0);
+
+    return oneRight;
+
+}
+
+PieceToShoot* PieceToShoot :: twoRight()
+{
+    PieceToShoot* twoRight = new PieceToShoot(2,0);
+
+    return twoRight;
+
+}
+
+PieceToShoot* PieceToShoot :: oneDown()
+{
+    PieceToShoot* oneDown = new PieceToShoot(0,-1);
+
+    return oneDown;
+
+}
+
+PieceToShoot* PieceToShoot :: twoDown()
+{
+    PieceToShoot* twoDown = new PieceToShoot(0,-2);
+
+    return twoDown;
+
+}
+
+PieceToShoot* PieceToShoot :: oneUp()
+{
+    PieceToShoot* oneUp = new PieceToShoot(0,1);
+
+    return oneUp;
+
+}
+
+PieceToShoot* PieceToShoot :: twoUp()
+{
+    PieceToShoot* twoUp = new PieceToShoot(0,2);
+
+    return twoUp;
+
+}

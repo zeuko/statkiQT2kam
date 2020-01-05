@@ -17,6 +17,8 @@ Qt::GlobalColor getColor(State state) {
         return Qt::gray;
     case BLANK:
         return Qt::white;
+    case SUNK:
+        return Qt::darkRed;
     }
 }
 
@@ -39,6 +41,8 @@ Map::Map(int x0, int y0,  bool shouldPaintShipStatus, int size, int pieceSize)
         for (int j = 0; j < size; j++) {
             cout << "x " << x <<", y " << y << endl;//"x " <<"x " <<
             Piece *piece = new Piece(x, y, pieceSize,shouldPaintShipStatus);
+            piece->setMapPositionX(i);
+            piece->setMapPositionY(j);
             row->push_back(piece);
             x = x + pieceSize;
         }
@@ -111,8 +115,9 @@ QRectF Piece::boundingRect() const
 void Piece::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton && (state == SHIP || state == BLANK)) {
-        update();
+
         QCoreApplication::sendEvent(oknodwa, new GameProgressEvent(this));
+        update();
     }
 }
 
@@ -169,6 +174,25 @@ Ship* Piece::getShip()
 void Piece::setPointerShip(Ship* pointerShip)
 {
     this->shipPointer = pointerShip;
+}
+
+void Piece::setMapPositionX(int mapX)
+{
+    this->mapPositionX = mapX;
+}
+
+int Piece::getMapPositionX()
+{
+    return mapPositionX;
+}
+
+void Piece::setMapPositionY(int mapY)
+{
+    this->mapPositionY = mapY;
+}
+int Piece::getMapPositionY()
+{
+    return mapPositionY;
 }
 
 Map :: ~Map()

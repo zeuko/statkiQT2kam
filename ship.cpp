@@ -9,13 +9,46 @@ Ship::Ship(list<Piece*>*listOfpiece)
         (*it)->setPointerShip(this);
 
     }
-this->pieces = listOfpiece;
+    this->pieces = listOfpiece;
+
 };
+
 list<Piece*>* Ship::getListShip()
 {
     return pieces ;
 
 }
+
+void Ship::setNeighborsMiss(Map* map)
+{
+    int x,y;
+    list<Piece*>* lista = getListShip();
+
+    for(list<Piece*>::iterator it = lista->begin(); it != lista->end(); it++)
+    {
+        Piece* missPiece = (*it);
+        x = missPiece->getMapPositionX();
+        y = missPiece->getMapPositionY();
+        for(int i = -1;i <=1; i++)
+        {
+            for(int j = -1; j <= 1; j++)
+            {
+                missPiece = map->getPiece(x+i,y+j);
+                if(x+i > 0 && x+i < 10 && y+j > 0 && x+j < 10)
+                {
+                    if(missPiece->getState() == State::BLANK)
+                    {
+                        missPiece->setState(State::MISS);
+                    }
+                }
+
+
+            }
+        }
+    }
+
+}
+
 bool Ship::isSunk()
 {
     list<Piece*>* lista = getListShip();
@@ -28,6 +61,18 @@ bool Ship::isSunk()
         }
     }
     return  true;
+};
+
+
+
+void Ship::setIsSunk()
+{
+    list<Piece*>* lista = getListShip();
+
+    for(list<Piece*>::iterator it = lista->begin(); it != lista->end(); it++)
+    {
+        (*it)->setState(State::SUNK);
+    }
 };
 
 
@@ -326,7 +371,7 @@ Ship* Ship :: createThreeMast(Map* Obiekt)
                 return ship;
             }
             else {
-                lista =createThreeMastHorizontal(Obiekt,x,y);
+                lista = createThreeMastHorizontal(Obiekt,x,y);
                 if(lista != nullptr){
                     makeShip = true;
                     Ship* ship = new Ship(lista);
