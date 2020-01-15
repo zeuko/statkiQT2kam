@@ -4,7 +4,8 @@
 #include "ship.h"
 #include "player.h"
 #include "bot.h"
-
+#include <stdlib.h>
+#include <QThread>
 // Helper Functions //
 list<Ship*>*  createShips(Map* map);
 bool checkIsEnd(list<Ship*>* ship);
@@ -50,15 +51,15 @@ Dialog::Dialog(QWidget *parent) : QDialog(parent), ui(new Ui::Dialog)
     this->playerShips = createShips(playersMap);
     this->botShips = createShips(botsMap);
 
-    // scene->addItem(playersMap);
-    // scene->addItem(botsMap);
+     scene->addItem(playersMap);
+     scene->addItem(botsMap);
 
     // maps and ships ready
     update();
 
 
 
-    this->currentGamePhase = GamePhase::PLAYER_TURN;
+    this->currentGamePhase = GamePhase::BOT_TURN;
 
 
 
@@ -67,7 +68,7 @@ Dialog::Dialog(QWidget *parent) : QDialog(parent), ui(new Ui::Dialog)
 
 void Dialog::playTheGame(GameProgressEvent* event)
 {
-//tu jest zle co nie ??
+
     if (currentGamePhase == GamePhase::PLAYER_TURN) {
 
         std::cout << "Player's move: ";
@@ -95,13 +96,14 @@ void Dialog::playTheGame(GameProgressEvent* event)
         {
 
          status = bot->takeTurn(playersMap);
+         QThread::msleep(100);
          if (checkIsEnd(playerShips)) {
              std::cout << "END, BOT WON" << flush;
              // display prompt & exit application ?
          }
             playersMap->update();
         }while(status);
-        currentGamePhase = PLAYER_TURN;
+        currentGamePhase = BOT_TURN;
     }
 
 

@@ -2,7 +2,7 @@
 
 Bot::Bot()
 {
-//list<CoordinatsToShoot*>* neposition = new list<CoordinatsToShoot*>();
+    //list<CoordinatsToShoot*>* neposition = new list<CoordinatsToShoot*>();
     this->position =  new list<CoordinatsToShoot*>();
 
 }
@@ -12,11 +12,16 @@ bool Bot :: takeTurn(Map* mapPlayer)
 {
 
 
-
-    if(this->position->empty() == true) // jesli lista pozycja pusta losujemy z randa
+    if(this->position->empty()) // jesli lista pozycja pusta losujemy z randa
     {
-        int x = qrand() % 10;
-        int y = qrand() % 10;
+        int x,y;
+
+        do
+        {
+            x = qrand() % 10;
+            y = qrand() % 10;
+
+        }while (mapPlayer->getPiece(x,y)->getState() != State::SHIP && mapPlayer->getPiece(x,y)->getState() != State::BLANK);
 
         if(mapPlayer->getPiece(x,y)->getState() == State::SHIP) //strzal
         {
@@ -31,17 +36,13 @@ bool Bot :: takeTurn(Map* mapPlayer)
             {
                 this->hitX = x;
                 this->hitY = y;
+                position->push_back(oneDownPoint);
+                position->push_back(oneUpPoint);
+                position->push_back(oneLeftPoint);
+                position->push_back(oneRightPoint);
 
-                position->push_back(CoordinatsToShoot::oneLeft());
-                position->push_back(CoordinatsToShoot::oneRight());
-                position->push_back(CoordinatsToShoot::oneDown());
-                position->push_back(CoordinatsToShoot::oneUp());
             }
             return true;
-        }
-        else if(mapPlayer->getPiece(x,y)->getState() != State::SHIP && mapPlayer->getPiece(x,y)->getState() != State::BLANK)
-        {
-            takeTurn(mapPlayer);
         }
         else {
             mapPlayer->getPiece(x,y)->setState(State::MISS);
@@ -51,16 +52,34 @@ bool Bot :: takeTurn(Map* mapPlayer)
     }
     else
     {
-       int x,y;
-       CoordinatsToShoot* cordToShot;
-        do {
+        int x,y;
+        CoordinatsToShoot* cordToShot;
+
+        do{
             cordToShot = position->front();
+            position->clear();
+
+            cout <<"lewo: " <<oneLeftPoint->getShiftX() <<" " << oneLeftPoint->getShiftY() << endl;
+            cout <<"prawo "<< oneRightPoint->getShiftX()<< " " << oneRightPoint->getShiftY() << endl;
+            cout <<"gora " << oneUpPoint->getShiftX()<< " " << oneUpPoint->getShiftY() << endl;
+            cout <<"dol "<< oneDownPoint->getShiftX()<< " " << oneDownPoint->getShiftY() << endl;
+
+
+            cout <<"2 lewo: " <<twoLeftPoint->getShiftX()<< " " << twoLeftPoint->getShiftY() << endl;
+            cout <<"2 prawo "<< twoRightPoint->getShiftX()<< " " << twoRightPoint->getShiftY() << endl;
+            cout <<"2 gora " << twoUpPoint->getShiftX()<< " " << twoUpPoint->getShiftY() << endl;
+            cout <<"2 dol "<< twoDownPoint->getShiftX()<< " " << twoDownPoint->getShiftY() << endl;
             position->pop_front();
 
-           x = hitX + cordToShot->getShiftX();
-           y = hitY + cordToShot->getShiftY();
+            x = this->hitX + cordToShot->getShiftX();
+            y = this->hitY + cordToShot->getShiftY();
 
-        }while(x < 0 || x > 9 || y < 0 || y > 9);
+        }  while(mapPlayer->getPiece(x,y) == nullptr || (mapPlayer->getPiece(x,y)->getState() == SHIP || mapPlayer->getPiece(x,y)->getState() == BLANK)  || !position->empty());
+
+        if(position->empty())
+        {
+            cout<< "WARNING - POSITION EMPTY" << flush;
+        }
 
         if(mapPlayer->getPiece(x,y)->getState() == State::SHIP)
         {
@@ -68,45 +87,46 @@ bool Bot :: takeTurn(Map* mapPlayer)
             if(mapPlayer->getPiece(x,y)->getShip()->isSunk() == true)
             {
                 mapPlayer->getPiece(x,y)->getShip()->setIsSunk();
+                //mapPlayer->getPiece(x,y)->getShip()->setNeighborsMiss(mapPlayer);
+
             }
+
             else
             {
+
                 this->hitX = x;
                 this->hitY = y;
-
-                if(cordToShot == CoordinatsToShoot::oneLeft())
+                if(cordToShot == oneLeftPoint)
                 {
-                    position->clear();
-                    position->push_back(CoordinatsToShoot::twoLeft());
-                    position->push_back(CoordinatsToShoot::oneRight());
+                    position->clear();  // XXXXXXX
+                    position->push_back(oneLeftPoint);
+                    position->push_back(twoRightPoint);
                 }
-                else if(cordToShot == CoordinatsToShoot::oneRight() )
+                else if(cordToShot == oneRightPoint )
                 {
-                    position->clear();
-                    position->push_back(CoordinatsToShoot::twoRight());
-                    position->push_back(CoordinatsToShoot::oneLeft());
+                    position->clear();// XXXXXXX
+                    position->push_back(oneRightPoint);
+                    position->push_back(twoLeftPoint);
                 }
-                else if(cordToShot == CoordinatsToShoot::oneDown())
+                else if(cordToShot == oneDownPoint)
                 {
-                    position->clear();
-                    position->push_back(CoordinatsToShoot::twoDown());
-                    position->push_back(CoordinatsToShoot::oneUp());
+                    position->clear();// XXXXXXX
+                    position->push_back(oneDownPoint);
+                    position->push_back(twoUpPoint);
                 }
                 else
                 {
-                    position->clear();
-                    position->push_back(CoordinatsToShoot::twoUp());
-                    position->push_back(CoordinatsToShoot::oneDown());
+                    position->clear();// XXXXXXX
+                    position->push_back(oneUpPoint);
+                   // position->push_back(twoDown);
                 }
 
             }
             return true;
         }
-        else if(mapPlayer->getPiece(x,y)->getState() != State::SHIP && mapPlayer->getPiece(x,y)->getState() != State::BLANK)
+
+        else
         {
-            takeTurn(mapPlayer);
-        }
-        else {
             mapPlayer->getPiece(x,y)->setState(State::MISS);
             return false;
         }

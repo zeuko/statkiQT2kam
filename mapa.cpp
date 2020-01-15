@@ -41,8 +41,8 @@ Map::Map(int x0, int y0,  bool shouldPaintShipStatus, int size, int pieceSize)
         for (int j = 0; j < size; j++) {
             cout << "x " << x <<", y " << y << endl;//"x " <<"x " <<
             Piece *piece = new Piece(x, y, pieceSize,shouldPaintShipStatus);
-            piece->setMapPositionX(i);
             piece->setMapPositionY(j);
+            piece->setMapPositionX(i);
             row->push_back(piece);
             x = x + pieceSize;
         }

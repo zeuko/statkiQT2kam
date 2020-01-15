@@ -34,13 +34,18 @@ void Ship::setNeighborsMiss(Map* map)
             for(int j = -1; j <= 1; j++)
             {
                 missPiece = map->getPiece(x+i,y+j);
-                if(x+i > 0 && x+i < 10 && y+j > 0 && x+j < 10)
-                {
+
+               // mapPlayer->getPiece(x,y) == nullptr && !position->empty()
+
+                if(missPiece){
+
                     if(missPiece->getState() == State::BLANK)
                     {
                         missPiece->setState(State::MISS);
+
                     }
                 }
+
 
 
             }
