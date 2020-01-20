@@ -1,18 +1,18 @@
 #ifndef PIECETOSHOOT_H
 #define PIECETOSHOOT_H
-class CoordinatsToShoot;
+class CoordinatsToShoot; // XX usun ta linijke
 class CoordinatsToShoot
 {
 public:
 
 
-    int getShiftX();
+    int getShiftX();  // XX formatowanie
     int getShiftY();
  CoordinatsToShoot(int x, int y);
 
 private:
 
-   // CoordinatsToShoot(int x, int y);
+   // CoordinatsToShoot(int x, int y); // XX usun
 
     int shiftX;
     int shiftY;
