@@ -2,6 +2,16 @@
 #include <QTime>
 #include <QRandomGenerator>
 using namespace std;
+
+// XX dodaj taka funkcje, przyda sie
+void printShipState(Ship* ship) {
+   cout << "SHIP SIZE = " ship->getPieces()->size() << endl << fflush ;
+   for(list<Piece*>::iterator it = ship->getListShip()->begin(); it != ship->getListShip()->end(); it++) {
+        cout << "     PIECE: " << (*it)->getX() << ", " << (*it)->getY() << ", state = " << (*it)->getState() << endl << fflush; // chodzi o mapPositionX i mapPositionY
+   }
+
+}
+
 Ship::Ship(list<Piece*>*listOfpiece)
 {
     for(list<Piece*>::iterator it = listOfpiece->begin();it != listOfpiece->end(); it++)
@@ -11,6 +21,7 @@ Ship::Ship(list<Piece*>*listOfpiece)
     }
     this->pieces = listOfpiece;
 
+
 };
 
 list<Piece*>* Ship::getListShip()
@@ -19,35 +30,27 @@ list<Piece*>* Ship::getListShip()
 
 }
 
+
+
 void Ship::setNeighborsMiss(Map* map)
 {
-    int x,y;
-    list<Piece*>* lista = getListShip();
 
-    for(list<Piece*>::iterator it = lista->begin(); it != lista->end(); it++)
+    // list<Piece*>* lista = getListShip();  // XX po co, możesz operować bezposrednio na liscie pieces, wywal
+
+    for(list<Piece*>::iterator it = pieces->begin(); it != pieces->end(); it++)
     {
-        Piece* missPiece = (*it);
-        x = missPiece->getMapPositionX();
-        y = missPiece->getMapPositionY();
-        for(int i = -1;i <=1; i++)
+        Piece* piece = (*it);
+        int x = piece->getMapPositionX();
+        int y = piece->getMapPositionY();
+        
+        for(int i = -1; i <= 1; i++) 
         {
             for(int j = -1; j <= 1; j++)
             {
-                missPiece = map->getPiece(x+i,y+j);
-
-               // mapPlayer->getPiece(x,y) == nullptr && !position->empty()
-
-                if(missPiece){
-
-                    if(missPiece->getState() == State::BLANK)
-                    {
-                        missPiece->setState(State::MISS);
-
-                    }
+                Piece* neighbour = map->getPiece(x+i, y+j);
+                if (neighbour != nullptr && neighbour->getState() == BLANK) {   
+                   neighbour->setState(MISS);
                 }
-
-
-
             }
         }
     }
@@ -56,9 +59,9 @@ void Ship::setNeighborsMiss(Map* map)
 
 bool Ship::isSunk()
 {
-    list<Piece*>* lista = getListShip();
-
-    for(list<Piece*>::iterator it = lista->begin(); it != lista->end(); it++)
+    //list<Piece*>* lista = getListShip();// XX po co, możesz operować bezposrednio na liscie pieces... wywal
+    // printShipState(this);
+    for(list<Piece*>::iterator it = pieces->begin(); it != pieces->end(); it++)
     {
         if((*it)->getState() != HIT)
         {
@@ -72,13 +75,14 @@ bool Ship::isSunk()
 
 void Ship::setIsSunk()
 {
-    list<Piece*>* lista = getListShip();
+    //list<Piece*>* lista = getListShip();   // XX po co, możesz operować bezposrednio na liscie pieces... wywal
 
-    for(list<Piece*>::iterator it = lista->begin(); it != lista->end(); it++)
+    for(list<Piece*>::iterator it = pieces->begin(); it != pieces->end(); it++)
     {
         (*it)->setState(State::SUNK);
     }
 };
+
 
 
 bool Ship :: checkIfCanBeShip(Map* map, int x, int y) {
