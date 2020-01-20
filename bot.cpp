@@ -56,8 +56,14 @@ bool Bot :: takeTurn(Map* mapPlayer)
         CoordinatsToShoot* cordToShot;
 
         do{
+                        
+            // XX dodaj to
+            if (position->empty()) {
+              break;   
+            }
+            
             cordToShot = position->front();
-            position->clear();
+            position->clear();  // XX wywal ta linijke, ona byla do testow tylko
 
             cout <<"lewo: " <<oneLeftPoint->getShiftX() <<" " << oneLeftPoint->getShiftY() << endl;
             cout <<"prawo "<< oneRightPoint->getShiftX()<< " " << oneRightPoint->getShiftY() << endl;
@@ -74,7 +80,9 @@ bool Bot :: takeTurn(Map* mapPlayer)
             x = this->hitX + cordToShot->getShiftX();
             y = this->hitY + cordToShot->getShiftY();
 
-        }  while(mapPlayer->getPiece(x,y) == nullptr || (mapPlayer->getPiece(x,y)->getState() == SHIP || mapPlayer->getPiece(x,y)->getState() == BLANK)  || !position->empty());
+            
+
+        }  while(mapPlayer->getPiece(x,y) == nullptr || (mapPlayer->getPiece(x,y)->getState() == SHIP || mapPlayer->getPiece(x,y)->getState() == BLANK)  /*|| !position->empty()*/); // XX wyrzuc to co w komentarzu jest
 
         if(position->empty())
         {
@@ -91,35 +99,61 @@ bool Bot :: takeTurn(Map* mapPlayer)
 
             }
 
-            else
+            else  
             {
-
+                // w tym miejscu sterowania na pewno strzelamy w 3masztowiec         
                 this->hitX = x;
                 this->hitY = y;
                 if(cordToShot == oneLeftPoint)
                 {
-                    position->clear();  // XXXXXXX
+                    position->clear();  
+                    cout << "HIT ONE LEFT" << endl; // XX dodaj logowanie
                     position->push_back(oneLeftPoint);
                     position->push_back(twoRightPoint);
+                    
+                    cout << "POSITION SIZE: " << position->size() << endl; // XX logowanie, dodaj takie w każdym ifie
+                    cout << "POSITION[0] = " << position->front()->getShiftX() <<", " << position->front()->getShiftY() << endl; 
+                    cout << "POSITION[1] = " << << position->front()->getShiftX() <<", " << position->front()->getShiftY() << endl;
+                    
                 }
                 else if(cordToShot == oneRightPoint )
                 {
-                    position->clear();// XXXXXXX
+                    position->clear();
+                    cout << "HIT ONE RIGHT" << endl; // XX dodaj logowanie
                     position->push_back(oneRightPoint);
                     position->push_back(twoLeftPoint);
+                    
+                    cout << "POSITION SIZE: " << position->size() << endl; // XX logowanie, dodaj takie w każdym ifie
+                    cout << "POSITION[0] = " << position->front()->getShiftX() <<", " << position->front()->getShiftY() << endl; 
+                    cout << "POSITION[1] = " << << position->front()->getShiftX() <<", " << position->front()->getShiftY() << endl;                    
                 }
                 else if(cordToShot == oneDownPoint)
                 {
-                    position->clear();// XXXXXXX
+                    position->clear();
+                    cout << "HIT ONE DOWN" << endl; // XX dodaj logowanie
                     position->push_back(oneDownPoint);
                     position->push_back(twoUpPoint);
+                   
+                    cout << "POSITION SIZE: " << position->size() << endl; // XX logowanie, dodaj takie w każdym ifie
+                    cout << "POSITION[0] = " << position->front()->getShiftX() <<", " << position->front()->getShiftY() << endl; 
+                    cout << "POSITION[1] = " << << position->front()->getShiftX() <<", " << position->front()->getShiftY() << endl;                    
+                   
                 }
-                else
+                else if (cordToShot == oneUpPoint) // dodaj warunek
                 {
-                    position->clear();// XXXXXXX
+                    position->clear();
+                    cout << "HIT ONE UP" << endl; // XX dodaj logowanie
                     position->push_back(oneUpPoint);
-                   // position->push_back(twoDown);
-                }
+                    position->push_back(twoDownPoint); // XX odkomentuj
+                    
+                    cout << "POSITION SIZE: " << position->size() << endl; // XX logowanie, dodaj takie w każdym ifie
+                    cout << "POSITION[0] = " << position->front()->getShiftX() <<", " << position->front()->getShiftY() << endl; 
+                    cout << "POSITION[1] = " << << position->front()->getShiftX() <<", " << position->front()->getShiftY() << endl;
+                    
+                } else {
+                    cout << "NIGDY NIE POWINNO SIE ZDARZYC" << endl; 
+                    cout << "CORD TO SHOOT = " << cordToShot->getShiftX() <<", " << cordToShot->getShiftY() << endl;  
+                } 
 
             }
             return true;
