@@ -7,7 +7,7 @@ CoordinatsToShoot :: CoordinatsToShoot  (int x, int y)
 
 
 }
- CoordinatsToShoot* oneLeftPoint = new CoordinatsToShoot(-1,0);
+ CoordinatsToShoot* oneLeftPoint = new CoordinatsToShoot(-1,0); // XX formatowanie
 CoordinatsToShoot* twoLeftPoint = new CoordinatsToShoot(-2,0);
  CoordinatsToShoot* oneRightPoint = new CoordinatsToShoot(1,0);
 CoordinatsToShoot* twoRightPoint = new CoordinatsToShoot(2,0);
